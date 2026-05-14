@@ -1,0 +1,60 @@
+{
+  "productName": "Koma Studio",
+  "appId": "com.koma.studio",
+  "copyright": "© 2026 Koma Studio",
+  "directories": {
+    "output": "out"
+  },
+  "asar": true,
+  "asarUnpack": [
+    "resources/ffmpeg/**"
+  ],
+  "files": [
+    "**/*",
+    "!cmd/",
+    "!electron/",
+    "!frontend/",
+    "!logs/",
+    "!out/",
+    "!packages/",
+    "!openspec/",
+    "public/dist/**/*",
+    "public/electron/**/*"
+  ],
+  "extraResources": {
+    "from": "build/extraResources/",
+    "to": "extraResources"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "installerIcon": "build/icons/icon.ico",
+    "uninstallerIcon": "build/icons/icon.ico",
+    "installerHeaderIcon": "build/icons/icon.ico",
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Koma Studio"
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "Sundykin",
+      "repo": "KomaBuild",
+      "releaseType": "release"
+    }
+  ],
+  "win": {
+    "icon": "build/icons/icon.ico",
+    "artifactName": "${productName}-${os}-${version}-${arch}-setup.${ext}",
+    "target": [
+      {
+        "target": "portable"
+      }
+    ]
+  },
+  "portable": {
+    "artifactName": "${productName}-${os}-${version}-${arch}-portable.${ext}"
+  }
+}
