@@ -106,15 +106,20 @@ jobs:
         run: npm run build-we
         working-directory: source
 
+      - name: List Windows build outputs
+        run: find source/out -type f | sort
+        shell: bash
+
       # [CHANGED #2] 把 latest*.yml 也带上 —— electron-updater 客户端需要这个文件
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
         with:
           name: windows-artifacts
+          if-no-files-found: error
           path: |
-            source/out/*.exe
-            source/out/*.blockmap
-            source/out/latest*.yml
+            source/out/**/*.exe
+            source/out/**/*.blockmap
+            source/out/**/latest*.yml
 
   build-macos:
     needs: [prepare]
@@ -163,16 +168,20 @@ jobs:
         run: npm run build-m-arm64
         working-directory: source
 
+      - name: List macOS build outputs
+        run: find source/out -type f | sort
+
       # [CHANGED #2] 同上：把 latest*.yml 也带上
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macos-artifacts
+          if-no-files-found: error
           path: |
-            source/out/*.dmg
-            source/out/*.zip
-            source/out/*.blockmap
-            source/out/latest*.yml
+            source/out/**/*.dmg
+            source/out/**/*.zip
+            source/out/**/*.blockmap
+            source/out/**/latest*.yml
 
   # [CHANGED #3] 新增：Linux AppImage（cmd/builder-linux.json 已改为 target: ["AppImage"]）
   build-linux:
@@ -214,14 +223,18 @@ jobs:
         run: npm run build-l
         working-directory: source
 
+      - name: List Linux build outputs
+        run: find source/out -type f | sort
+
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4
         with:
           name: linux-artifacts
+          if-no-files-found: error
           path: |
-            source/out/*.AppImage
-            source/out/*.blockmap
-            source/out/latest*.yml
+            source/out/**/*.AppImage
+            source/out/**/*.blockmap
+            source/out/**/latest*.yml
 
   release:
     # [CHANGED #3] needs 加上 build-linux
